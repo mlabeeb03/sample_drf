@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
 from .models import Booking, Vehicle
@@ -15,6 +16,10 @@ class BookingSerializer(serializers.ModelSerializer):
         model = Booking
         fields = ["id", "vehicle", "start_datetime", "end_datetime"]
 
+    def validate(self, data):
+        if data["end_datetime"] <= data["start_datetime"]:
+            raise serializers.ValidationError("End time must be after start time.")
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -22,6 +27,10 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["username", "email", "password"]
+
+    def validate_password(self, value):
+        validate_password(value)
+        return value
 
     def create(self, validated_data):
         user = User.objects.create_user(
