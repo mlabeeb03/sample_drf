@@ -3,6 +3,46 @@
 ## Overview
 This API provides endpoints for managing vehicles and bookings in a vehicle rental system. It includes user authentication, vehicle management, and booking functionality.
 
+## Installation Steps
+
+### 1. Clone and Setup
+```bash
+git clone https://github.com/mlabeeb03/sample_drf
+cd sample_drf
+python -m venv venv
+
+# Activate virtual environment
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+```
+
+### 2. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Database Setup
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+```
+
+### 4. Run Server
+```bash
+python manage.py runserver
+```
+
+The API can be accessed by making requests at: `http://localhost:8000/` using Postman, cURL etc.
+
+## Running Tests
+```bash
+# Run all tests
+python manage.py test
+```
+
 ## Base URL
 ```
 /
