@@ -12,14 +12,16 @@ class VehicleSerializer(serializers.ModelSerializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    
     class Meta:
         model = Booking
-        fields = ["id", "vehicle", "start_datetime", "end_datetime"]
+        fields = ["id", "vehicle", "user", "start_datetime", "end_datetime"]
 
     def validate(self, data):
         if data["end_datetime"] <= data["start_datetime"]:
             raise serializers.ValidationError("End time must be after start time.")
-
+        return data
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
